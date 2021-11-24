@@ -31,7 +31,7 @@ exports.addUser = async (req, res) => {
   }
 };
 
-//read
+//read all data
 exports.getUsers = async (req, res) => {
   try {
     const dataUsers = await User.findAll({
@@ -55,6 +55,7 @@ exports.getUsers = async (req, res) => {
   }
 };
 
+// read data by id
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -119,12 +120,11 @@ exports.updateUser = async (req, res) => {
         exclude: ['createdAt', 'updatedAt', 'password'],
       },
     });
+    updatedData.avatar = pathFile + updatedData.avatar;
 
     res.send({
       message: 'update data user is successfull',
-      data: {
-        user: updatedData,
-      },
+      data: updatedData,
     });
   } catch (error) {
     console.log(error);
