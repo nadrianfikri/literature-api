@@ -19,7 +19,7 @@ router.patch('/profile/:id', auth, uploadImage('avatar'), updateUser);
 router.delete('/profile/:id', auth, deleteUser);
 
 // routes literature
-router.post('/literature', auth, uploadPdf('attach'), uploadImage('thumbnail'), addLiterature);
+router.post('/literature', auth, uploadPdf('attach', 'thumbnail'), addLiterature);
 router.get('/literature', adminOnly, getLiteratures);
 router.get('/literature/:id', auth, getLiterature);
 router.get('/literature/status/:status', auth, getLiteraturesByStatus);

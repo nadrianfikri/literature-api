@@ -61,7 +61,7 @@ exports.uploadImage = (imageFile) => {
   };
 };
 
-exports.uploadPdf = (pdfFile) => {
+exports.uploadPdf = (pdfFile, image) => {
   // define storage
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -75,7 +75,7 @@ exports.uploadPdf = (pdfFile) => {
   //file filtering only pdfs
   const fileFilter = (req, file, cb) => {
     if (file.fieldname === pdfFile) {
-      if (!file.originalname.match(/\.(pdf||PDF)$/)) {
+      if (!file.originalname.match(/\.(pdf|PDF)$/)) {
         req.fileValidationError = {
           message: 'Only uploads pdfs file',
         };
@@ -91,13 +91,17 @@ exports.uploadPdf = (pdfFile) => {
 
   const upload = multer({
     storage,
-    fileFilter,
+    // fileFilter,
     limits: {
       fileSize: maxSize,
     },
   }).fields([
     {
       name: pdfFile,
+      maxCount: 1,
+    },
+    {
+      name: image,
       maxCount: 1,
     },
   ]);
