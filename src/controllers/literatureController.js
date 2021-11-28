@@ -8,6 +8,7 @@ exports.addLiterature = async (req, res) => {
     const newLiterature = await Literature.create({
       ...req.body,
       attach: req.files.attach[0].filename,
+      thumbnail: req.files.thumbnail[0].filename,
       userId: req.user.id,
       status: 'Waiting Approve',
     });
@@ -55,6 +56,7 @@ exports.getLiteratures = async (req, res) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'userId'],
       },
+      order: [['updatedAt', 'DESC']],
     });
 
     dataLiterature.forEach((item) => {
@@ -217,6 +219,7 @@ exports.getLiteratureByuser = async (req, res) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'userId'],
       },
+      order: [['publication_date', 'DESC']],
     });
 
     dataByUser.forEach((item) => {
@@ -257,6 +260,7 @@ exports.getLiteraturesByStatus = async (req, res) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'userId'],
       },
+      order: [['publication_date', 'DESC']],
     });
 
     dataLiterature.forEach((item) => {

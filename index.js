@@ -18,6 +18,8 @@ app.use(cors());
 
 // grouping router endpoint
 app.use('/api/v1', router);
+// static file directory  by file upload
+app.use('/uploads', express.static('uploads'));
 
 // create server
 app.listen(port, () => console.log(`Server is listening on port : ${port}`));
