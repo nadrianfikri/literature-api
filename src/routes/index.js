@@ -15,22 +15,22 @@ const { addCollection, getCollections, deleteCollection } = require('../controll
 router.post('/profile', addUser);
 router.get('/profile', getUsers);
 router.get('/profile/:id', getUser);
-router.patch('/profile/:id', uploadImage('avatar'), updateUser);
-router.delete('/profile/:id', deleteUser);
+router.patch('/profile/:id', auth, uploadImage('avatar'), updateUser);
+router.delete('/profile/:id', auth, deleteUser);
 
 // routes literature
 router.post('/literature', auth, uploadPdf('attach'), addLiterature);
-router.get('/literature', getLiteratures);
-router.get('/literature/:id', getLiterature);
-router.patch('/literature/:id', updateLiterature);
-router.get('/literature/status/:status', getLiteraturesByStatus);
+router.get('/literature', adminOnly, getLiteratures);
+router.get('/literature/:id', auth, getLiterature);
+router.get('/literature/status/:status', auth, getLiteraturesByStatus);
 router.get('/profile/:profile_id/literature', getLiteratureByuser);
-router.delete('/literature/:id', deleteLiterature);
+router.patch('/literature/:id', auth, adminOnly, uploadPdf('attach'), updateLiterature);
+router.delete('/literature/:id', auth, deleteLiterature);
 
 // routes collection
-router.post('/collection/:profile_id', addCollection);
-router.get('/collection/:profile_id', getCollections);
-router.delete('/collection/:id', deleteCollection);
+router.post('/collection/:profile_id', auth, addCollection);
+router.get('/collection/:profile_id', auth, getCollections);
+router.delete('/collection/:id', auth, deleteCollection);
 
 // routes auth
 router.post('/register', register);

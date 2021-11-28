@@ -1,4 +1,4 @@
-const { Op } = require('sequelize/dist');
+// const { Op } = require('sequelize/dist');
 const { User, Literature } = require('../../models');
 const pathFile = 'http://localhost:9000/uploads/';
 

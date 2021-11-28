@@ -119,7 +119,6 @@ exports.getCollections = async (req, res) => {
 };
 
 // delete a collection
-//   delete
 exports.deleteCollection = async (req, res) => {
   try {
     const { id } = req.params;
