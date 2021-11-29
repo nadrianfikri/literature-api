@@ -4,10 +4,11 @@ const pathFile = 'http://localhost:9000/uploads/';
 //create data
 exports.addCollection = async (req, res) => {
   try {
-    const { profile_id } = req.params;
+    const { id } = req.params;
     const newCollection = await Collection.create({
       ...req.body,
-      userId: profile_id,
+      userId: req.user.id,
+      literatureId: id,
       bookmark: 'Yes',
     });
 
@@ -45,11 +46,66 @@ exports.addCollection = async (req, res) => {
 
     dataCollection.user.avatar = pathFile + dataCollection.user.avatar;
     dataCollection.literature.attach = pathFile + dataCollection.literature.attach;
+    dataCollection.literature.thumbnail = pathFile + dataCollection.literature.thumbnail;
     dataCollection.literature.profile.avatar = pathFile + dataCollection.literature.profile.avatar;
 
-    console.log(req.user);
     res.send({
       message: 'add new Collection is successfull',
+      data: dataCollection,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 'Failed',
+      message: 'Server error',
+    });
+  }
+};
+
+// read a collection
+exports.getCollection = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const dataCollection = await Collection.findOne({
+      where: {
+        literatureId: id,
+        userId: req.user.id,
+      },
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: {
+            exclude: ['createdAt', 'updatedAt', 'password'],
+          },
+        },
+        {
+          model: Literature,
+          as: 'literature',
+          include: {
+            model: User,
+            as: 'profile',
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'password'],
+            },
+          },
+          attributes: {
+            exclude: ['createdAt', 'updatedAt', 'userId'],
+          },
+        },
+      ],
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'userId', 'literatureId'],
+      },
+    });
+
+    dataCollection.user.avatar = pathFile + dataCollection.user.avatar;
+    dataCollection.literature.attach = pathFile + dataCollection.literature.attach;
+    dataCollection.literature.thumbnail = pathFile + dataCollection.literature.thumbnail;
+    dataCollection.literature.profile.avatar = pathFile + dataCollection.literature.profile.avatar;
+
+    res.send({
+      message: 'Get resource is successfull',
       data: dataCollection,
     });
   } catch (error) {
@@ -99,6 +155,7 @@ exports.getCollections = async (req, res) => {
 
     dataCollection.forEach((item) => {
       item.user.avatar = pathFile + item.user.avatar;
+      item.literature.thumbnail = pathFile + item.literature.thumbnail;
       item.literature.attach = pathFile + item.literature.attach;
       item.literature.profile.avatar = pathFile + item.literature.profile.avatar;
       return item;

@@ -9,7 +9,7 @@ const { addLiterature, getLiteratures, getLiterature, updateLiterature, deleteLi
 const { uploadImage, uploadPdf } = require('../middlewares/uploadFile');
 const { auth, adminOnly } = require('../middlewares/auth');
 const { register, login, checkAuth } = require('../controllers/authController');
-const { addCollection, getCollections, deleteCollection } = require('../controllers/collectionController');
+const { addCollection, getCollections, deleteCollection, getCollection } = require('../controllers/collectionController');
 
 // routes user
 router.post('/profile', addUser);
@@ -20,7 +20,7 @@ router.delete('/profile/:id', auth, deleteUser);
 
 // routes literature
 router.post('/literature', auth, uploadPdf('attach', 'thumbnail'), addLiterature);
-router.get('/literature', adminOnly, getLiteratures);
+router.get('/literature', auth, adminOnly, getLiteratures);
 router.get('/literature/:id', auth, getLiterature);
 router.get('/literature/status/:status', auth, getLiteraturesByStatus);
 router.get('/profile/:profile_id/literature', getLiteratureByuser);
@@ -28,8 +28,9 @@ router.patch('/literature/:id', auth, adminOnly, uploadPdf('attach'), updateLite
 router.delete('/literature/:id', auth, deleteLiterature);
 
 // routes collection
-router.post('/collection/:profile_id', auth, addCollection);
-router.get('/collection/:profile_id', auth, getCollections);
+router.post('/collection/:id', auth, addCollection);
+router.get('/collection/:id', auth, getCollection);
+router.get('/collection/profile/:profile_id', auth, getCollections);
 router.delete('/collection/:id', auth, deleteCollection);
 
 // routes auth

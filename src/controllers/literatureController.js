@@ -61,6 +61,7 @@ exports.getLiteratures = async (req, res) => {
 
     dataLiterature.forEach((item) => {
       item.attach = pathFile + item.attach;
+      item.thumbnail = pathFile + item.thumbnail;
       item.profile.avatar = pathFile + item.profile.avatar;
       return item;
     });
@@ -224,6 +225,7 @@ exports.getLiteratureByuser = async (req, res) => {
 
     dataByUser.forEach((item) => {
       item.attach = pathFile + item.attach;
+      item.thumbnail = pathFile + item.thumbnail;
       item.profile.avatar = pathFile + item.profile.avatar;
       return item;
     });
@@ -265,6 +267,7 @@ exports.getLiteraturesByStatus = async (req, res) => {
 
     dataLiterature.forEach((item) => {
       item.attach = pathFile + item.attach;
+      item.thumbnail = pathFile + item.thumbnail;
       item.profile.avatar = pathFile + item.profile.avatar;
       return item;
     });
@@ -282,9 +285,3 @@ exports.getLiteraturesByStatus = async (req, res) => {
     });
   }
 };
-
-// catatan
-// query like
-//  name :{
-//   [Op.like]: '%bob%'
-// }
