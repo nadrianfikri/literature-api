@@ -54,7 +54,7 @@ exports.getLiteratures = async (req, res) => {
         },
       },
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'userId'],
+        exclude: ['createdAt', 'userId'],
       },
       order: [['updatedAt', 'DESC']],
     });
@@ -220,7 +220,7 @@ exports.getLiteratureByuser = async (req, res) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'userId'],
       },
-      order: [['publication_date', 'DESC']],
+      order: [['updatedAt', 'DESC']],
     });
 
     dataByUser.forEach((item) => {

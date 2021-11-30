@@ -20,7 +20,7 @@ router.delete('/profile/:id', auth, deleteUser);
 
 // routes literature
 router.post('/literature', auth, uploadPdf('attach', 'thumbnail'), addLiterature);
-router.get('/literature', auth, adminOnly, getLiteratures);
+router.get('/literature', auth, getLiteratures);
 router.get('/literature/:id', auth, getLiterature);
 router.get('/literature/status/:status', auth, getLiteraturesByStatus);
 router.get('/profile/:profile_id/literature', getLiteratureByuser);
