@@ -8,11 +8,11 @@ const pathFile = 'http://localhost:9000/uploads/';
 exports.register = async (req, res) => {
   // create validation scheme with joi
   const scheme = Joi.object({
-    fullname: Joi.string().min(5).required(),
+    fullname: Joi.string().min(2).required(),
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(6).required(),
     phone: Joi.string().min(8).required(),
-    address: Joi.string().min(5).required(),
+    address: Joi.string().min(2).required(),
     gender: Joi.string().min(2).required(),
   });
 
