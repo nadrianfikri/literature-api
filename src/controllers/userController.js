@@ -1,5 +1,5 @@
 const { User } = require('../../models');
-const pathFile = 'http://localhost:9000/uploads/';
+const pathFile = process.env.PATH_FILE || 'http://localhost:9000/uploads/';
 
 // req add user
 exports.addUser = async (req, res) => {

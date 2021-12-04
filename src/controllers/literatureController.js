@@ -1,6 +1,6 @@
 // const { Op } = require('sequelize/dist');
 const { User, Literature } = require('../../models');
-const pathFile = 'http://localhost:9000/uploads/';
+const pathFile = process.env.PATH_FILE || 'http://localhost:9000/uploads/';
 
 //create data
 exports.addLiterature = async (req, res) => {
