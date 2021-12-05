@@ -21,5 +21,11 @@ app.use('/api/v1', router);
 // static file directory  by file upload
 app.use('/uploads', express.static('uploads'));
 
+app.get('/', function (req, res) {
+  res.send({
+    message: 'Hello Literature',
+  });
+});
+
 // create server
 app.listen(port, () => console.log(`Server is listening on port : ${port}`));
