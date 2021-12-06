@@ -1,5 +1,6 @@
 const { User } = require('../../models');
 const pathFile = process.env.PATH_FILE || 'http://localhost:9000/uploads/';
+const cloudinary = require('../thirdparty/cloudinary');
 
 // req add user
 exports.addUser = async (req, res) => {
@@ -68,7 +69,7 @@ exports.getUser = async (req, res) => {
       },
     });
 
-    dataUser.avatar = pathFile + dataUser.avatar;
+    dataUser.avatar = cloudinary.url(dataUser.avatar, { secure: true });
     res.send({
       message: 'Get data success',
       data: dataUser,
@@ -88,10 +89,15 @@ exports.updateUser = async (req, res) => {
     const { id } = req.params;
 
     if (req.files) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'literature-files',
+        use_filename: true,
+        unique_filename: false,
+      });
       await User.update(
         {
           ...req.body,
-          avatar: req.files.avatar[0].filename,
+          avatar: result.public_id,
         },
         {
           where: {
@@ -120,7 +126,7 @@ exports.updateUser = async (req, res) => {
         exclude: ['createdAt', 'updatedAt', 'password'],
       },
     });
-    updatedData.avatar = pathFile + updatedData.avatar;
+    updatedData.avatar = cloudinary.url(updatedData.avatar, { secure: true });
 
     res.send({
       message: 'update data user is successfull',
