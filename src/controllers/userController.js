@@ -89,7 +89,7 @@ exports.updateUser = async (req, res) => {
     const { id } = req.params;
 
     if (req.files) {
-      const result = await cloudinary.uploader.upload(req.file.path, {
+      const result = await cloudinary.uploader.upload(req.files.avatar[0].path, {
         folder: 'literature-files',
         use_filename: true,
         unique_filename: false,

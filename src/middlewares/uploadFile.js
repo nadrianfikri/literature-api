@@ -34,7 +34,12 @@ exports.uploadImage = (imageFile) => {
     limits: {
       fileSize: maxSize,
     },
-  }).single(imageFile);
+  }).fields([
+    {
+      name: imageFile,
+      maxCount: 1,
+    },
+  ]);
 
   return (req, res, next) => {
     upload(req, res, (err) => {
