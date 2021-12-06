@@ -11,14 +11,10 @@ exports.addLiterature = async (req, res) => {
       use_filename: true,
       unique_filename: false,
     });
-    const attach = await cloudinary.uploader.upload(req.files.attach[0].path, {
-      folder: 'literature-files',
-      use_filename: true,
-      unique_filename: false,
-    });
+
     const newLiterature = await Literature.create({
       ...req.body,
-      attach: attach.public_id,
+      attach: req.files.attach[0].filename,
       thumbnail: thumbnail.public_id,
       userId: req.user.id,
       status: 'Waiting Approve',
@@ -71,7 +67,7 @@ exports.getLiteratures = async (req, res) => {
     });
 
     dataLiterature.forEach((item) => {
-      item.attach = cloudinary.url(item.attach, { secure: true });
+      item.attach = pathFile + item.attach;
       item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
       item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
       return item;
@@ -112,7 +108,7 @@ exports.getLiterature = async (req, res) => {
       },
     });
 
-    dataLiterature.attach = cloudinary.url(dataLiterature.attach, { secure: true });
+    dataLiterature.attach = pathFile + dataLiterature.attach;
     dataLiterature.profile.avatar = cloudinary.url(dataLiterature.profile.avatar, { secure: true });
 
     res.send({
@@ -235,7 +231,7 @@ exports.getLiteratureByuser = async (req, res) => {
     });
 
     dataByUser.forEach((item) => {
-      item.attach = cloudinary.url(item.attach, { secure: true });
+      item.attach = pathFile + item.attach;
       item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
       item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
       return item;
@@ -277,7 +273,7 @@ exports.getLiteraturesByStatus = async (req, res) => {
     });
 
     dataLiterature.forEach((item) => {
-      item.attach = cloudinary.url(item.attach, { secure: true });
+      item.attach = pathFile + item.attach;
       item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
       item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
     });
