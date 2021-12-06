@@ -3,6 +3,7 @@ const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pathFile = 'http://localhost:9000/uploads/';
+const cloudinary = require('../thirdparty/cloudinary');
 
 // REGISTER HANDLE
 exports.register = async (req, res) => {
@@ -66,7 +67,7 @@ exports.register = async (req, res) => {
         phone: newUser.phone,
         gender: newUser.gender,
         address: newUser.address,
-        avatar: pathFile + newUser.avatar,
+        avatar: cloudinary.url(newUser.avatar, { secure: true }),
         role: newUser.role,
         token,
       },
@@ -138,7 +139,7 @@ exports.login = async (req, res) => {
         phone: userExist.phone,
         gender: userExist.gender,
         address: userExist.address,
-        avatar: pathFile + userExist.avatar,
+        avatar: cloudinary.url(userExist.avatar, { secure: true }),
         role: userExist.role,
         token,
       },
@@ -179,7 +180,7 @@ exports.checkAuth = async (req, res) => {
           id: dataUser.id,
           fullname: dataUser.fullname,
           email: dataUser.email,
-          avatar: pathFile + dataUser.avatar,
+          avatar: cloudinary.url(dataUser.avatar, { secure: true }),
           phone: dataUser.phone,
           gender: dataUser.gender,
           address: dataUser.address,
