@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
       ...req.body,
       password: hashedPassword,
       role: 'user',
-      avatar: 'avatar.jpg',
+      avatar: 'avatar.png',
     });
 
     // generate token
