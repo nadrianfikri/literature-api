@@ -41,7 +41,7 @@ exports.getUsers = async (req, res) => {
       },
     });
 
-    dataUsers.forEach((user) => (user.avatar = pathFile + user.avatar));
+    dataUsers.forEach((user) => (user.avatar = cloudinary.url(user.avatar, { secure: true })));
 
     res.send({
       message: 'Get data success',
