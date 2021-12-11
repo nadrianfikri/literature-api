@@ -6,16 +6,17 @@ const cloudinary = require('../thirdparty/cloudinary');
 //create data
 exports.addLiterature = async (req, res) => {
   try {
-    const thumbnail = await cloudinary.uploader.upload(req.files.thumbnail[0].path, {
-      folder: 'literature-files',
-      use_filename: true,
-      unique_filename: false,
-    });
+    // const thumbnail = await cloudinary.uploader.upload(req.files.thumbnail[0].path, {
+    //   folder: 'literature-files',
+    //   use_filename: true,
+    //   unique_filename: false,
+    // });
 
     const newLiterature = await Literature.create({
       ...req.body,
       attach: req.files.attach[0].filename,
-      thumbnail: thumbnail.public_id,
+      // thumbnail: thumbnail.public_id,
+      thumbnail: req.files.thumbnail[0].filename,
       userId: req.user.id,
       status: 'Waiting Approve',
     });
@@ -68,7 +69,9 @@ exports.getLiteratures = async (req, res) => {
 
     dataLiterature.forEach((item) => {
       item.attach = pathFile + item.attach;
-      item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
+      item.thumbnail = pathFile + item.thumbnail;
+      // item.profile.avatar = pathFile + item.profile.avatar;
+      // item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
       item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
       return item;
     });
@@ -109,7 +112,9 @@ exports.getLiterature = async (req, res) => {
     });
 
     dataLiterature.attach = pathFile + dataLiterature.attach;
-    dataLiterature.profile.avatar = cloudinary.url(dataLiterature.profile.avatar, { secure: true });
+    dataLiterature.thumbnail = pathFile + dataLiterature.thumbnail;
+    dataLiterature.profile.avatar = pathFile + dataLiterature.profile.avatar;
+    // dataLiterature.profile.avatar = cloudinary.url(dataLiterature.profile.avatar, { secure: true });
 
     res.send({
       message: 'Get resources successfully',
@@ -171,8 +176,10 @@ exports.updateLiterature = async (req, res) => {
       },
     });
 
-    dataLiterature.attach = cloudinary.url(dataLiterature.attach, { secure: true });
-    dataLiterature.profile.avatar = cloudinary.url(dataLiterature.profile.avatar, { secure: true });
+    dataLiterature.attach = pathFile + dataLiterature.attach;
+    dataLiterature.profile.avatar = pathFile + dataLiterature.profile.avatar;
+    // dataLiterature.attach = cloudinary.url(dataLiterature.attach, { secure: true });
+    // dataLiterature.profile.avatar = cloudinary.url(dataLiterature.profile.avatar, { secure: true });
 
     res.send({
       message: 'Get resources successfully',
@@ -232,8 +239,10 @@ exports.getLiteratureByuser = async (req, res) => {
 
     dataByUser.forEach((item) => {
       item.attach = pathFile + item.attach;
-      item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
-      item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
+      item.thumbnail = pathFile + item.thumbnail;
+      item.profile.avatar = pathFile + item.profile.avatar;
+      // item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
+      // item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
       return item;
     });
 
@@ -274,8 +283,10 @@ exports.getLiteraturesByStatus = async (req, res) => {
 
     dataLiterature.forEach((item) => {
       item.attach = pathFile + item.attach;
-      item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
-      item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
+      item.thumbnail = pathFile + item.thumbnail;
+      item.profile.avatar = pathFile + item.profile.avatar;
+      // item.thumbnail = cloudinary.url(item.thumbnail, { secure: true });
+      // item.profile.avatar = cloudinary.url(item.profile.avatar, { secure: true });
     });
 
     res.send({

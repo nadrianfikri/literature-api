@@ -12,7 +12,7 @@ exports.register = async (req, res) => {
     fullname: Joi.string().min(2).required(),
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(6).required(),
-    phone: Joi.string().min(8).required(),
+    phone: Joi.required(),
     address: Joi.string().min(2).required(),
     gender: Joi.string().min(2).required(),
   });
@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
       ...req.body,
       password: hashedPassword,
       role: 'user',
-      avatar: 'avatar.png',
+      avatar: 'literature-files/avatar.png',
     });
 
     // generate token
