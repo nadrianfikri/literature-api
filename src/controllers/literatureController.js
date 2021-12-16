@@ -14,9 +14,9 @@ exports.addLiterature = async (req, res) => {
 
     const newLiterature = await Literature.create({
       ...req.body,
-      attach: req.files.attach[0].filename,
+      // attach: req.files.attach[0].filename,
       // thumbnail: thumbnail.public_id,
-      thumbnail: req.files.thumbnail[0].filename,
+      // thumbnail: req.files.thumbnail[0].filename,
       userId: req.user.id,
       status: 'Waiting Approve',
     });
