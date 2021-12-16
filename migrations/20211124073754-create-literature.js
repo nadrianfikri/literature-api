@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       ISBN: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       author: {
         type: Sequelize.STRING,
