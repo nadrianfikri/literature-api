@@ -23,6 +23,9 @@ module.exports = {
       author: {
         type: Sequelize.STRING,
       },
+      thumbnail: {
+        type: Sequelize.STRING,
+      },
       attach: {
         type: Sequelize.STRING,
       },
